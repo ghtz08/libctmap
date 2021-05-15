@@ -28,9 +28,9 @@ int main() {
         static_assert(!m2::contains<k3>::value, "");
         static_assert(!m0::contains<k1>::value, "");
 #if defined(CT_ENABLE_CXX_17)
-        static_assert(m2::contains_v<k2>, "");
-        static_assert(!m2::contains_v<k3>, "");
-        static_assert(!m0::contains_v<k1>, "");
+        static_assert(m2::contains_v<k2>);
+        static_assert(!m2::contains_v<k3>);
+        static_assert(!m0::contains_v<k1>);
 #endif
     }
     // test equal
@@ -38,7 +38,7 @@ int main() {
         using t = ct::map_from_list_t<k1, v1, k2, v2>;
         static_assert(t::equal<m2>::value, "");
 #if defined(CT_ENABLE_CXX_17)
-        static_assert(t::equal_v<m2>, "");
+        static_assert(t::equal_v<m2>);
 #endif
     }
     // test at
@@ -49,20 +49,20 @@ int main() {
         static_assert(std::is_same<m4::at_t<k4>, v4>::value, "");
         static_assert(m4::at<k4>::value == v4::value, "");
 #if defined(CT_ENABLE_CXX_17)
-        static_assert(m4::at_v<k4> == v4::value, "");
+        static_assert(m4::at_v<k4> == v4::value);
 #endif
     }
     // test erase
     {
-        using t = m3::erase<k2>::type;
-        using u = ct::map_from_list<k1, v1, k3, v3>::type;
+        using t = m3::erase_t<k2>;
+        using u = ct::map_from_list_t<k1, v1, k3, v3>;
         static_assert(t::equal<u>::value, "");
     }
     // test merge
     {
         using a = ct::map_from_list_t<k1, v1, k3, v3>;
         using b = ct::map_from_list_t<k2, v2, k4, v4>;
-        using t = a::merge<b>::type;
+        using t = a::merge_t<b>;
         static_assert(t::equal<m4>::value, "");
     }
 }
