@@ -1,6 +1,10 @@
 #include <iostream>
 #include <ctmap.hpp>
 
+#if defined(CT_ENABLE_CXX_17)
+#   pragma message("C++ 17 is enabled")
+#endif
+
 int main() {
     struct k1 {}; struct k2 {}; struct k3 {}; struct k4 {};
     struct v1 {}; struct v2 {}; struct v3 {}; using v4 = ct::i32<4>;
