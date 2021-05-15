@@ -239,13 +239,21 @@ class map {
     struct contains: details::map_contains_t<key_t, items...> {};
     template <typename M>
     struct equal: details::map_equal_t<self_t, M> {};
+#if defined(CT_ENABLE_CXX_17)
+    template <typename key_t>
+    static constexpr auto contains_v = self_t::template contains<key_t>::value;
+    template <typename M>
+    static constexpr auto equal_v = self_t::template equal<M>::value;
+#endif
 
     template <typename key_t>
     struct at: details::map_at_t<key_t, items...> {};
     template <typename key_t>
     using at_t = typename self_t::template at<key_t>::type;
-    // template <typename key_t>
-    // static constexpr auto at_v = self_t::template at<key_t>::value;
+#if defined(CT_ENABLE_CXX_17)
+    template <typename key_t>
+    static constexpr auto at_v = self_t::template at<key_t>::value;
+#endif
 
     template <typename key_t, typename value_t>
     struct insert: details::map_insert_t<key_t, value_t, items...> {};

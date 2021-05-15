@@ -1,7 +1,6 @@
 #include <iostream>
 #include <ctmap.hpp>
 
-
 int main() {
     struct k1 {}; struct k2 {}; struct k3 {}; struct k4 {};
     struct v1 {}; struct v2 {}; struct v3 {}; using v4 = ct::i32<4>;
@@ -24,11 +23,19 @@ int main() {
         static_assert(m2::contains<k2>::value, "");
         static_assert(!m2::contains<k3>::value, "");
         static_assert(!m0::contains<k1>::value, "");
+#if defined(CT_ENABLE_CXX_17)
+        static_assert(m2::contains_v<k2>, "");
+        static_assert(!m2::contains_v<k3>, "");
+        static_assert(!m0::contains_v<k1>, "");
+#endif
     }
     // test equal
     {
         using t = ct::map_from_list_t<k1, v1, k2, v2>;
         static_assert(t::equal<m2>::value, "");
+#if defined(CT_ENABLE_CXX_17)
+        static_assert(t::equal_v<m2>, "");
+#endif
     }
     // test at
     {
@@ -37,6 +44,9 @@ int main() {
         static_assert(std::is_same<m3::at_t<k3>, v3>::value, "");
         static_assert(std::is_same<m4::at_t<k4>, v4>::value, "");
         static_assert(m4::at<k4>::value == v4::value, "");
+#if defined(CT_ENABLE_CXX_17)
+        static_assert(m4::at_v<k4> == v4::value, "");
+#endif
     }
     // test erase
     {
